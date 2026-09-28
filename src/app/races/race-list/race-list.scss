@@ -1,0 +1,21 @@
+.race-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+
+  &__header {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin: 8px 0 0;
+  }
+
+  &__card {
+    width: 100%;
+  }
+}
