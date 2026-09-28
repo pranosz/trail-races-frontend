@@ -7,6 +7,51 @@
     </p>
   </header>
 
+  <form
+    class="race-list__search"
+    [formGroup]="searchForm"
+    (ngSubmit)="search()"
+  >
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        formControlName="search"
+        placeholder="Race name, location..."
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Distance from</mat-label>
+      <input
+        matInput
+        type="number"
+        min="0"
+        formControlName="distanceFrom"
+      />
+      <span matTextSuffix>km</span>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Distance to</mat-label>
+      <input
+        matInput
+        type="number"
+        min="0"
+        formControlName="distanceTo"
+      />
+      <span matTextSuffix>km</span>
+    </mat-form-field>
+
+    <button
+      matButton="filled"
+      type="submit"
+      [disabled]="isLoading()"
+    >
+      Search
+    </button>
+  </form>
+
   @if (isLoading()) {
     <mat-card>
       <mat-card-content>
@@ -20,19 +65,10 @@
       </mat-card-content>
     </mat-card>
   } @else {
-    @for (race of races(); track race.id) {
-      <mat-card class="race-list__card">
-        <mat-card-header>
-          <mat-card-title>{{ race.name }}</mat-card-title>
-          <mat-card-subtitle>
-            {{ race.location }} · {{ race.distance }} km
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <p>{{ race.description }}</p>
-        </mat-card-content>
-      </mat-card>
-    }
+    <div class="race-list__items">
+      @for (race of races(); track race.id) {
+        <app-race-card [race]="race" />
+      }
+    </div>
   }
 </section>

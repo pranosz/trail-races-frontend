@@ -1,0 +1,54 @@
+<mat-card class="race-card">
+  <div class="race-card__top" [class]="distanceClass()">
+    <mat-card-header>
+      <mat-card-title>{{ race().name }}</mat-card-title>
+
+      <mat-card-subtitle>
+        {{ race().location }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="race-card__tags">
+        <span class="race-card__tag">
+            {{ race().distance }} km
+        </span>
+
+        <span class="race-card__tag">
+            ↑ {{ race().elevation }} m
+        </span>
+
+        @if (race().itra !== null) {
+            <span class="race-card__tag">
+            ITRA {{ race().itra }}
+            </span>
+        }
+        </div>
+
+      <p class="race-card__description">
+        {{ race().description }}
+      </p>
+    </mat-card-content>
+  </div>
+
+  <mat-card-actions class="race-card__footer">
+    <span class="race-card__date">
+      {{ race().date }}
+    </span>
+
+    <span class="race-card__price">
+      {{ race().price }} {{ race().currency }}
+    </span>
+
+    <span class="race-card__spacer"></span>
+
+    <a
+      matButton
+      [href]="race().websiteUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Website →
+    </a>
+  </mat-card-actions>
+</mat-card>

@@ -15,7 +15,22 @@
     margin: 8px 0 0;
   }
 
-  &__card {
-    margin-bottom: 16px;
+  &__search {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 32px;
+  }
+
+  &__items {
+    display: grid;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    &__search {
+      grid-template-columns: 1fr;
+    }
   }
 }
