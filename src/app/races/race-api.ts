@@ -11,7 +11,11 @@ import { RaceSearchCriteria } from './race-search-criteria';
 export class RaceApi {
   private readonly http = inject(HttpClient);
 
-  getRaces(criteria: RaceSearchCriteria = {}): Observable<RacePage> {
+  getRaces(
+    criteria: RaceSearchCriteria = {},
+    page = 0,
+    size = 10,
+  ): Observable<RacePage> {
     let params = new HttpParams();
 
     if (criteria.search?.trim()) {
@@ -25,6 +29,9 @@ export class RaceApi {
     if (criteria.distanceTo !== undefined) {
       params = params.set('distanceTo', criteria.distanceTo);
     }
+
+    params = params.set('page', page);
+    params = params.set('size', size);
 
     return this.http.get<RacePage>('/api/races', { params });
   }

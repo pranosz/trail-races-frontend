@@ -70,5 +70,14 @@
         <app-race-card [race]="race" />
       }
     </div>
+
+    <mat-paginator
+      [length]="totalElements()"
+      [pageIndex]="currentPage()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="changePage($event)"
+      aria-label="Select race page"
+    />
   }
 </section>

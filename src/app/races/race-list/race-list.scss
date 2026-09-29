@@ -28,6 +28,10 @@
     gap: 16px;
   }
 
+  mat-paginator {
+    margin-top: 24px;
+  }
+
   @media (max-width: 768px) {
     &__search {
       grid-template-columns: 1fr;
