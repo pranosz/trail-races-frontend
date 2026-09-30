@@ -9,6 +9,7 @@ import {
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 import { Race } from '../race';
 import { RaceApi } from '../race-api';
@@ -23,6 +24,7 @@ import { RaceSearchCriteria } from '../race-search-criteria';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatSelectModule,
     ReactiveFormsModule,
     RaceCard,
   ],
@@ -42,6 +44,7 @@ export class RaceList implements OnInit {
   protected readonly totalElements = signal(0);
   protected readonly currentPage = signal(0);
   protected readonly pageSize = signal(10);
+  protected readonly sort = signal('date,asc');
 
   protected readonly searchForm = this.formBuilder.group({
     search: [''],
@@ -56,6 +59,7 @@ export class RaceList implements OnInit {
       const distanceTo = this.parseNumber(params['distanceTo']);
       const page = this.parsePage(params['page']);
       const size = this.parsePageSize(params['size']);
+      const sort = this.parseSort(params['sort']);
 
       this.searchForm.patchValue(
         {
@@ -74,6 +78,7 @@ export class RaceList implements OnInit {
         },
         page,
         size,
+        sort,
       );
     });
   }
@@ -103,15 +108,28 @@ export class RaceList implements OnInit {
     });
   }
 
+  protected changeSort(sort: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        sort,
+        page: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   private loadRaces(
     criteria: RaceSearchCriteria,
     page: number,
     size: number,
+    sort: string,
   ): void {
     this.isLoading.set(true);
     this.error.set(false);
+    this.sort.set(sort);
 
-    this.raceApi.getRaces(criteria, page, size).subscribe({
+    this.raceApi.getRaces(criteria, page, size, sort).subscribe({
       next: (racePage) => {
         this.races.set(racePage.content);
         this.totalElements.set(racePage.totalElements);
@@ -152,5 +170,25 @@ export class RaceList implements OnInit {
     return [5, 10, 20].includes(size)
       ? size
       : 10;
+  }
+
+  private parseSort(value: string | null): string {
+    if (!value) {
+      return 'date,asc';
+    }
+
+    const [property, direction] = value.split(',');
+
+    const allowedProperties = ['name', 'date', 'distance', 'price'];
+    const allowedDirections = ['asc', 'desc'];
+
+    if (
+      allowedProperties.includes(property) &&
+      allowedDirections.includes(direction)
+    ) {
+      return `${property},${direction}`;
+    }
+
+    return 'date,asc';
   }
 }

@@ -15,6 +15,7 @@ export class RaceApi {
     criteria: RaceSearchCriteria = {},
     page = 0,
     size = 10,
+    sort = 'date,asc',
   ): Observable<RacePage> {
     let params = new HttpParams();
 
@@ -30,8 +31,10 @@ export class RaceApi {
       params = params.set('distanceTo', criteria.distanceTo);
     }
 
-    params = params.set('page', page);
-    params = params.set('size', size);
+    params = params
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort);
 
     return this.http.get<RacePage>('/api/races', { params });
   }

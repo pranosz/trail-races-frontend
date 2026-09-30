@@ -52,6 +52,47 @@
     </button>
   </form>
 
+  <mat-form-field>
+    <mat-label>Sort by</mat-label>
+
+    <mat-select
+      [value]="sort()"
+      (selectionChange)="changeSort($event.value)"
+    >
+      <mat-option value="date,asc">
+        Date — oldest first
+      </mat-option>
+
+      <mat-option value="date,desc">
+        Date — newest first
+      </mat-option>
+
+      <mat-option value="distance,asc">
+        Distance — shortest first
+      </mat-option>
+
+      <mat-option value="distance,desc">
+        Distance — longest first
+      </mat-option>
+
+      <mat-option value="name,asc">
+        Name — A to Z
+      </mat-option>
+
+      <mat-option value="name,desc">
+        Name — Z to A
+      </mat-option>
+
+      <mat-option value="price,asc">
+        Price — lowest first
+      </mat-option>
+
+      <mat-option value="price,desc">
+        Price — highest first
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   @if (isLoading()) {
     <mat-card>
       <mat-card-content>
