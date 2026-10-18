@@ -1,0 +1,11 @@
+
+.git
+node_modules/
+dist/
+.angular/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.env
+.env.*
